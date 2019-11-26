@@ -49,12 +49,25 @@ class Directory extends React.Component {
   render() {
     return (
       <div className="directory-menu">
-        {this.state.sections.map(({ title, imageUrl, id, size }) => (
-          <MenuItem key={id} title={title} image={imageUrl} size={size} />
+        {this.state.sections.map(({ id, imageUrl, ...otherSectionProps }) => (
+          <MenuItem key={id} image={imageUrl} {...otherSectionProps} />
         ))}
       </div>
     );
   }
 }
+
+// equivalent to:  <div className="directory-menu">
+//   {this.state.sections.map(({ title, imageUrl, id, size, linkUrl }) => (
+//     <MenuItem
+//       key={id}
+//       title={title}
+//       image={imageUrl}
+//       size={size}
+//       linkUrl={linkUrl}
+//     />
+//   ))}
+// </div>
+// id is left becsue we change name of next prop to key, but for other props where names don't change, we may use {otherSectionProps}
 
 export default Directory;
