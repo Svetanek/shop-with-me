@@ -1,10 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component.jsx';
 import Header from './components/header/header.component.jsx';
 import SignInSignUpPage from './pages/sign-in-up-page/sign-in-up-page.component.jsx';
 import { auth, createUserProfileDoc } from './firebase/firebase.utils';
+import { setCurrentUser } from './redux/user/user.actions';
 import './App.css';
 
 // const HatsPage = () => (
@@ -14,13 +16,13 @@ import './App.css';
 // );
 
 class App extends React.Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.state = {
-      currentUser: null,
-    };
-  }
+  //   this.state = {
+  //     currentUser: null,
+  //   };
+  // }
   unsubscribeFromAuth = null;
 
   componentDidMount() {
@@ -29,17 +31,12 @@ class App extends React.Component {
         const userRef = await createUserProfileDoc(userAuth);
 
         userRef.onSnapshot(snapshot => {
-          this.setState({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data(),
-            },
-          });
+          this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
+
           console.log('ThisState==', this.state);
         });
-        // console.log(this.state); WILL NOT LOG HERE BECAUSE GOES AFTER ASYNC FUNC, can be set as a second function inside setState({...}, () => console.log(...) )or
       } else {
-        this.setState({ currentUser: userAuth });
+        this.props.setCurrentUser(userAuth);
       }
       console.log(userAuth);
     });
@@ -62,5 +59,7 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+});
+export default connect(null, mapDispatchToProps)(App);
