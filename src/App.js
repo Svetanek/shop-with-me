@@ -29,25 +29,18 @@ class App extends React.Component {
         const userRef = await createUserProfileDoc(userAuth);
 
         userRef.onSnapshot(snapshot => {
-          this.setState(
-            {
-              currentUser: {
-                id: snapshot.id,
-                ...snapshot.data(),
-              },
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data(),
             },
-            () => {
-              console.log('STATE===', this.state);
-            }
-          );
+          });
           console.log('ThisState==', this.state);
         });
-        // console.log(this.state); WILL NOT LOG BECAUSE GOUS AFTER ASYNC FUNC
+        // console.log(this.state); WILL NOT LOG HERE BECAUSE GOES AFTER ASYNC FUNC, can be set as a second function inside setState({...}, () => console.log(...) )or
       } else {
         this.setState({ currentUser: userAuth });
       }
-
-      // this.setState({ currentUser: user });
       console.log(userAuth);
     });
   }
