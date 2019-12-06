@@ -1,4 +1,4 @@
-import { UserActionTypes } from './user.action.types';
+import { UserActionTypes } from './user.types';
 
 const iINITIAL_STATE = { currentUser: null };
 const userReducer = (state = iINITIAL_STATE, action) => {
