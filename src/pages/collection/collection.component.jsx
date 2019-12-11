@@ -5,6 +5,7 @@ import PreviewItem from '../../components/preview-item/preview-item.component';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 
 const CollectionPage = ({ collection }) => {
+  console.log('collection==', collection);
   const { title, items } = collection;
   console.log('SHOPPAGE Match=', collection);
   return (
@@ -19,6 +20,11 @@ const CollectionPage = ({ collection }) => {
   );
 };
 
+const mapStateToProps = (state, ownProps) => ({
+  collection: selectCollection(ownProps.match.params.collectionId)(state),
+});
+export default connect(mapStateToProps)(CollectionPage);
+
 // const CollectionPage = ({ match }) => {
 //   console.log('SHOPPAGE Match=', match.params.collectionId);
 //   return (
@@ -27,11 +33,6 @@ const CollectionPage = ({ collection }) => {
 //     </div>
 //   );
 // };
-
-const mapStateToProps = (state, ownProps) => ({
-  collection: selectCollection(ownProps.match.params.collectionId)(state),
-});
-export default connect(mapStateToProps)(CollectionPage);
 
 //ownProps = props received through Route on shop.component => ownProps.match.params
 // and second argument (state) is needed because there is a nested fuction inside of selectCollection that needs that second argument => Currying concept
