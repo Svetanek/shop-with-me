@@ -36,9 +36,9 @@ const SHOP_DATA = {
       },
       {
         id: 6,
-        name: 'Palm Tree Cap',
-        imageUrl: 'https://i.ibb.co/rKBDvJX/palm-tree-cap.png',
-        price: 14,
+        name: 'Black Topa Cap',
+        imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
+        price: 15,
       },
       {
         id: 7,
@@ -60,10 +60,10 @@ const SHOP_DATA = {
       },
     ],
   },
-  sneakers: {
+  shoes: {
     id: 2,
-    title: 'Sneakers',
-    routeName: 'sneakers',
+    title: 'Shoes',
+    routeName: 'shoes',
     items: [
       {
         id: 10,
@@ -238,9 +238,9 @@ const SHOP_DATA = {
       },
       {
         id: 35,
-        name: 'Burgundy T-shirt',
-        imageUrl: 'https://i.ibb.co/mh3VM1f/polka-dot-shirt.png',
-        price: 25,
+        name: 'Military jacket',
+        imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
+        price: 35,
       },
     ],
   },
