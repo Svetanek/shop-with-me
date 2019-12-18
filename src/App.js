@@ -13,29 +13,22 @@ import { auth, createUserProfileDoc } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
-// const HatsPage = () => (
-//   <div>
-//     <h1>HATS PAGE</h1>
-//   </div>
-// );
-
 class App extends React.Component {
   unsubscribeFromAuth = null;
-
   componentDidMount() {
+    // const { setCurrentUser, collectionsArray } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDoc(userAuth);
 
+        //onSnapshot == similar to onAuthStateChanges
         userRef.onSnapshot(snapshot => {
           this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
-
-          console.log('ThisState==', this.state);
         });
       } else {
         this.props.setCurrentUser(userAuth);
       }
-      console.log(userAuth);
+      console.log('AUTH', userAuth);
     });
   }
 
@@ -75,4 +68,39 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
+// to seed Firebase database:
+//import { selectCollectionForView } from './redux/shop/shop.selectors';
+//import { auth, createUserProfileDoc, addCollectionAndDocs} from './firebase/firebase.utils';
+
+// componentDidMount() {
+//   this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+//     if (userAuth) {
+//       const userRef = await createUserProfileDoc(userAuth);
+//       userRef.onSnapshot(snapshot => {
+//         this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
+//       });
+//     } else {
+//       this.props.setCurrentUser(userAuth);
+
+// ****LOOK HERE****
+//       addCollectionAndDocs(
+//         'collections',
+//         this.props.collectionsArray.map(({ title, items }) => ({
+//           title,
+//           items,
+//         }))
+//       );
+//     }
+//   });
+// }
+
+//const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser,
+//**** LOOK HERE****
+//   collectionsArray: selectCollectionForView,
+// });
