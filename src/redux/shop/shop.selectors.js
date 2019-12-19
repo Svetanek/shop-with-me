@@ -9,13 +9,12 @@ export const selectShopCollections = createSelector(
 
 export const selectCollectionForView = createSelector(
   [selectShopCollections],
-  collectionObj => Object.values(collectionObj)
+  collectionObj => (collectionObj ? Object.values(collectionObj) : [])
 );
 
 export const selectCollection = collectionUrlParam =>
-  createSelector(
-    [selectShopCollections],
-    collections => collections[collectionUrlParam]
+  createSelector([selectShopCollections], collections =>
+    collections ? collections[collectionUrlParam] : null
   );
 
 // const COLLECTION_ID_MAP = {
