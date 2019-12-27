@@ -5,16 +5,14 @@ import PreviewItem from '../../components/preview-item/preview-item.component';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 
 const CollectionPage = ({ collection }) => {
-  console.log('collection==', collection);
   const { title, items } = collection;
-  console.log('SHOPPAGE Match=', collection);
   return (
     <div className="collection-page">
       <h2 className="title">{title}</h2>
       <div className="items">
-        {items.map(item => (
-          <PreviewItem key={item.id} item={item} />
-        ))}
+        {items
+          ? items.map(item => <PreviewItem key={item.id} item={item} />)
+          : null}
       </div>
     </div>
   );

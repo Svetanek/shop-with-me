@@ -1,69 +1,72 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import CollectionOverview from '../../components/collections-overview/collections-overview.component';
+import { createStructuredSelector } from 'reselect';
+import { gettingCollections } from '../../redux/shop/shop.actions';
+import { selectCollectionFetching } from '../../redux/shop/shop.selectors';
+import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
 import CollectionPage from '../collection/collection.component';
-import {
-  firestore,
-  convertCollectionsSnapshotToMap,
-} from '../../firebase/firebase.utils';
-import { updateCollections } from '../../redux/shop/shop.actions';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
-const CollectionOverviewWithSpinner = WithSpinner(CollectionOverview);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
-class ShopPage extends React.Component {
-  state = {
-    loading: true,
-  };
 
+class ShopPage extends React.Component {
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
-    const { updateCollections } = this.props;
-    const collectionRef = firestore.collection('collections');
-    collectionRef.onSnapshot(async snapshot => {
-      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      updateCollections(collectionsMap);
-      this.setState({ loading: false });
-    });
+    const { fetchCollections } = this.props;
+    fetchCollections();
   }
 
   render() {
     const { match } = this.props;
-    const { loading } = this.state;
+
     return (
       <div className="shop-page">
         <Route
           exact
           path={`${match.path}`}
-          render={props => (
-            <CollectionOverviewWithSpinner isLoading={loading} {...props} />
-          )}
+          component={CollectionsOverviewContainer}
         />
         <Route
           path={`${match.path}/:collectionId`}
-          render={props => (
-            <CollectionPageWithSpinner isLoading={loading} {...props} />
-          )}
+          render={props => <CollectionPageWithSpinner {...props} />}
         />
       </div>
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  updateCollections: collectionsMap =>
-    dispatch(updateCollections(collectionsMap)),
+const mapStateToProps = createStructuredSelector({
+  isCollectionFetching: selectCollectionFetching,
 });
-export default connect(null, mapDispatchToProps)(ShopPage);
 
-// render() {
-//   const { collections } = this.state;
-//   return (
-//     <div className="shop-page">
-//       {collections.map(collection => (
-//         <Collection key="collection.id" />
-//       ))}
-//     </div>
-//   );
-// }
+const mapDispatchToProps = dispatch => ({
+  fetchCollections: () => dispatch(gettingCollections()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
+
+// alternative to onSnapshot (in componentDidMount) is promise... but without live update like observable pattern onSnapshot
+//   collectionRef.get()
+//  .then(snapshot => {
+//   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+//   updateCollections(collectionsMap);
+//   this.setState({ loading: false });
+// });
+
+//
+// fetch('https://firestore.googleapis.com/v1/projects/shop-db-44779/databases/(default)/documents/collections').then(response.json()).then(collections => console.log('Collections', collections))
+
+//WITHSPINNER
+// import WithSpinner from '../../components/with-spinner/with-spinner.component';
+
+// const CollectionPageWithSpinner = WithSpinner(CollectionPage)
+
+// <Route
+// path={`${match.path}/:collectionId`}
+// render={props => (
+//   <CollectionPageWithSpinner
+//     isLoading={!collectionsLoaded}
+//     {...props}
+//   />
+// )}
+// />
