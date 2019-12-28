@@ -46,7 +46,6 @@ firebase.initializeApp(config);
 
 export const addCollectionAndDocs = async (collectionKey, objectToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
-  console.log('CollectionRef=', collectionRef);
   const batch = firestore.batch();
   objectToAdd.forEach(obj => {
     const newDocRef = collectionRef.doc();

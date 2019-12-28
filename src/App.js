@@ -28,7 +28,6 @@ class App extends React.Component {
       } else {
         this.props.setCurrentUser(userAuth);
       }
-      console.log('AUTH', userAuth);
     });
   }
 
@@ -68,10 +67,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 // to seed Firebase database:
 //import { selectCollectionForView } from './redux/shop/shop.selectors';
