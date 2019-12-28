@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './collection.styles.scss';
-import PreviewItem from '../../components/preview-item/preview-item.component';
+import Item from '../../components/preview-item/preview-item.component';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 
 const CollectionPage = ({ collection }) => {
-  const { title, items } = collection;
+  const { title, items } = collection ? collection : { title: '', items: [] };
   return (
     <div className="collection-page">
-      <h2 className="title">{title}</h2>
+      <h2 className="title" onClick={() => console.log('TITLE')}>
+        {title}
+      </h2>
       <div className="items">
-        {items
-          ? items.map(item => <PreviewItem key={item.id} item={item} />)
-          : null}
+        {items ? items.map(item => <Item key={item.id} item={item} />) : null}
       </div>
     </div>
   );

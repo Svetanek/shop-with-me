@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { gettingCollections } from '../../redux/shop/shop.actions';
+import { selectCollectionFetching } from '../../redux/shop/shop.selectors';
 import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
 import CollectionPage from '../collection/collection.component';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
@@ -34,11 +36,13 @@ class ShopPage extends React.Component {
     );
   }
 }
-
+const mapStateToProps = createStructuredSelector({
+  isCollectionFetching: selectCollectionFetching,
+});
 const mapDispatchToProps = dispatch => ({
   fetchCollections: () => dispatch(gettingCollections()),
 });
-export default connect(null, mapDispatchToProps)(ShopPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
 
 // alternative to onSnapshot (in componentDidMount) is promise... but without live update like observable pattern onSnapshot
 //   collectionRef.get()

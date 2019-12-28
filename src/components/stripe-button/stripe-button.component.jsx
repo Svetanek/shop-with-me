@@ -8,7 +8,6 @@ const StripeCheckoutButton = ({ price, history, clearCart }) => {
   const priceInCents = price * 100;
   const publishableKey = 'pk_test_6cK6c3cc70YIkRkdqxH2d8Q10052CeFnOC';
   const onToken = token => {
-    console.log('TOKEN', token);
     clearCart();
     alert('Payment Successful');
     history.push('/');
@@ -34,8 +33,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(StripeCheckoutButton)
+  connect(null, mapDispatchToProps)(StripeCheckoutButton)
 );
