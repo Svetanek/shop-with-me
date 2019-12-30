@@ -9,26 +9,24 @@ import ShopPage from './pages/shop/shop.component.jsx';
 import Header from './components/header/header.component.jsx';
 import SignInSignUpPage from './pages/sign-in-up-page/sign-in-up-page.component.jsx';
 import CheckoutPage from './pages/checkout/checkout.component';
-import { auth, createUserProfileDoc } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
   componentDidMount() {
-    // const { setCurrentUser, collectionsArray } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDoc(userAuth);
-
-        //onSnapshot == similar to onAuthStateChanges
-        userRef.onSnapshot(snapshot => {
-          this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
-        });
-      } else {
-        this.props.setCurrentUser(userAuth);
-      }
-    });
+    // //const { setCurrentUser, collectionsArray } = this.props;
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   if (userAuth) {
+    //     const userRef = await createUserProfileDoc(userAuth);
+    //     //onSnapshot == similar to onAuthStateChanges
+    //     userRef.onSnapshot(snapshot => {
+    //       this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
+    //     });
+    //   } else {
+    //     this.props.setCurrentUser(userAuth);
+    //   }
+    // });
   }
 
   componentWillUnmount() {
@@ -63,7 +61,7 @@ class App extends React.Component {
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
-// EQUAL TO const mapStateToProps = ({ user }) => ({ currentUser: user.currentUser });
+
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
 });
