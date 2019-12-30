@@ -9,7 +9,7 @@ import ShopPage from './pages/shop/shop.component.jsx';
 import Header from './components/header/header.component.jsx';
 import SignInSignUpPage from './pages/sign-in-up-page/sign-in-up-page.component.jsx';
 import CheckoutPage from './pages/checkout/checkout.component';
-import { setCurrentUser } from './redux/user/user.actions';
+// import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 class App extends React.Component {
@@ -62,10 +62,10 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// const mapDispatchToProps = dispatch => ({
+//   setCurrentUser: user => dispatch(setCurrentUser(user)),
+// });
+export default connect(mapStateToProps)(App);
 
 // to seed Firebase database:
 //import { selectCollectionForView } from './redux/shop/shop.selectors';
