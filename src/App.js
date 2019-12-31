@@ -10,12 +10,15 @@ import Header from './components/header/header.component.jsx';
 import SignInSignUpPage from './pages/sign-in-up-page/sign-in-up-page.component.jsx';
 import CheckoutPage from './pages/checkout/checkout.component';
 // import { setCurrentUser } from './redux/user/user.actions';
+import { checkUserSession } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
   componentDidMount() {
-    // //const { setCurrentUser, collectionsArray } = this.props;
+    const { checkUserSession } = this.props;
+    checkUserSession();
+
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
     //   if (userAuth) {
     //     const userRef = await createUserProfileDoc(userAuth);
@@ -62,10 +65,10 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   setCurrentUser: user => dispatch(setCurrentUser(user)),
-// });
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 // to seed Firebase database:
 //import { selectCollectionForView } from './redux/shop/shop.selectors';
