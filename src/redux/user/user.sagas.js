@@ -19,7 +19,6 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   try {
     const userRef = yield call(createUserProfileDoc, userAuth, additionalData);
     const userSnapshot = yield userRef.get();
-    //put() - put things back into Redux flow
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailure(error));
@@ -52,7 +51,7 @@ export function* isUserAuthenticated() {
     if (!userAuth) return;
     yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {
-    yield put(signOutFailure(error));
+    yield put(signInFailure(error));
   }
 }
 
@@ -64,15 +63,7 @@ export function* signOut() {
     yield put(signOutFailure(error));
   }
 }
-//need to refactor:
-//       this.setState({
-//   displayName: '',
-//   email: '',
-//   password: '',
-//   confirmPassword: '',
-// });
 
-//desctructure userData as payload: {...}
 export function* signUp({ payload: { displayName, email, password } }) {
   try {
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);

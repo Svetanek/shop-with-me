@@ -12,6 +12,7 @@ const config = {
   appId: '1:826276724102:web:98098056af1337868e4007',
   measurementId: 'G-WYT0FEBMLY',
 };
+firebase.initializeApp(config);
 
 export const createUserProfileDoc = async (userAuth, additionalData) => {
   if (!userAuth) return;
@@ -25,8 +26,9 @@ export const createUserProfileDoc = async (userAuth, additionalData) => {
   //   collection: collectionSnapshot.docs.map(doc => doc.data()),
   // });
 
-  if (!snapshot.exist) {
+  if (!snapshot.exists) {
     const { displayName, email } = userAuth;
+
     const createdAt = new Date();
     try {
       await userRef.set({
@@ -41,8 +43,6 @@ export const createUserProfileDoc = async (userAuth, additionalData) => {
   }
   return userRef;
 };
-
-firebase.initializeApp(config);
 
 export const addCollectionAndDocs = async (collectionKey, objectToAdd) => {
   const collectionRef = firestore.collection(collectionKey);

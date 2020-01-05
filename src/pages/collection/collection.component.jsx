@@ -5,6 +5,8 @@ import Item from '../../components/preview-item/preview-item.component';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 
 const CollectionPage = ({ collection }) => {
+  console.log('Collection=', collection);
+
   const { title, items } = collection ? collection : { title: '', items: [] };
   return (
     <div className="collection-page">

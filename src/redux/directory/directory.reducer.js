@@ -1,5 +1,3 @@
-// import pic_W from '../../images/sv.JPG';
-
 const INITIAL_STATE = {
   sections: [
     {
