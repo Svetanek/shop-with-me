@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,53 +13,30 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import { checkUserSession } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
-class App extends React.Component {
-  unsubscribeFromAuth = null;
-  componentDidMount() {
-    const { checkUserSession } = this.props;
+// put checkUserSession into the dependancy array since it's passed trough mapDispatchToProps
+const App = ({ checkUserSession, currentUser }) => {
+  useEffect(() => {
     checkUserSession();
+  }, [checkUserSession]);
 
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDoc(userAuth);
-    //     //onSnapshot == similar to onAuthStateChanges
-    //     userRef.onSnapshot(snapshot => {
-    //       this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
-    //     });
-    //   } else {
-    //     this.props.setCurrentUser(userAuth);
-    //   }
-    // });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    return (
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route
-            exact
-            path="/signin"
-            render={() =>
-              this.props.currentUser ? (
-                <Redirect to="/" />
-              ) : (
-                <SignInSignUpPage />
-              )
-            }
-          />
-          <Route exact path="/checkout" component={CheckoutPage} />
-        </Switch>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/shop" component={ShopPage} />
+        <Route
+          exact
+          path="/signin"
+          render={() =>
+            currentUser ? <Redirect to="/" /> : <SignInSignUpPage />
+          }
+        />
+        <Route exact path="/checkout" component={CheckoutPage} />
+      </Switch>
+    </div>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
@@ -74,6 +51,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //import { selectCollectionForView } from './redux/shop/shop.selectors';
 //import { auth, createUserProfileDoc, addCollectionAndDocs} from './firebase/firebase.utils';
 
+// VERSION I
 // componentDidMount() {
 //   this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 //     if (userAuth) {
@@ -101,3 +79,26 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 //**** LOOK HERE****
 //   collectionsArray: selectCollectionForView,
 // });
+
+// VERSION II
+// unsubscribeFromAuth = null;
+// componentDidMount() {
+
+//   checkUserSession();
+
+// this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+//   if (userAuth) {
+//     const userRef = await createUserProfileDoc(userAuth);
+//     //onSnapshot == similar to onAuthStateChanges
+//     userRef.onSnapshot(snapshot => {
+//       this.props.setCurrentUser({ id: snapshot.id, ...snapshot.data() });
+//     });
+//   } else {
+//     this.props.setCurrentUser(userAuth);
+//   }
+// });
+// }
+
+// componentWillUnmount() {
+//   this.unsubscribeFromAuth();
+// }
