@@ -30,26 +30,6 @@ const StripeCheckoutButton = ({ price, history, clearCart }) => {
         'there was an issue with your payment. Please make sure you use the correct credit card info'
       );
     }
-    // USING PROMISE
-    // axios({
-    //   url: 'payment',
-    //   method: 'post',
-    //   data: {
-    //     amount: priceInCents,
-    //     token: token,
-    //   },
-    // })
-    //   .then(response => {
-    //     clearCart();
-    //     alert('Payment Successful');
-    //     history.push('/');
-    //   })
-    //   .catch(error => {
-    //     console.log('Payment error', JSON.parse(error));
-    //     alert(
-    //       'there was an issue with your payment. Please make sure you use the correct credit card info'
-    //     );
-    //   });
   };
 
   return (
