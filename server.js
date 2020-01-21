@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 // const bodyParser = require('body-parser');
 const path = require('path');
+const compression = require('compression');
 
 //require('dotenv) --> looks for .env file inside of the root folder and  with config() it will add it(.env = secret key) to process environment (process.env)
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
@@ -12,6 +13,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
