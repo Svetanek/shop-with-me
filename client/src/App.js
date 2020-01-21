@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import './App.css';
-
+// import './App.css';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component.jsx';
 import Header from './components/header/header.component.jsx';
@@ -12,6 +11,7 @@ import CheckoutPage from './pages/checkout/checkout.component';
 // import { setCurrentUser } from './redux/user/user.actions';
 import { checkUserSession } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
+import { GlobalStyle } from './global.styles';
 
 // put checkUserSession into the dependancy array since it's passed trough mapDispatchToProps
 const App = ({ checkUserSession, currentUser }) => {
@@ -21,6 +21,7 @@ const App = ({ checkUserSession, currentUser }) => {
 
   return (
     <div>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />

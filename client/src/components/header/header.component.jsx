@@ -25,37 +25,19 @@ const Header = ({ currentUser, hidden, signOutStart }) => (
     <OptionsContainer>
       <OptionLink to="/shop">SHOP</OptionLink>
       <OptionLink to="/shop">CONTACT</OptionLink>
-
       {currentUser ? (
-        <OptionLink as="div" to="style" onClick={signOutStart}>
+        <OptionLink as="div" onClick={signOutStart}>
           SIGN OUT
         </OptionLink>
       ) : (
         <OptionLink to="/signin">SIGN IN</OptionLink>
       )}
-      {CartIcon ? <CartIcon /> : <span>missing cart</span>}
+      <CartIcon />
     </OptionsContainer>
     {hidden ? null : <CartDropdown />}
   </HeaderContainer>
 );
 
-// const mapStateToProps = state => ({
-//   currentUser: state.user.currentUser,
-// });
-
-//below passed a destructured state
-// const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-//   currentUser,
-//   hidden,
-// });
-
-// Variant with selectors:
-// const mapStateToProps = state => ({
-//   currentUser: selectCurrentUser(state),
-//   hidden: selectCartHidden(state),
-// });
-
-//Variant with createStructuredSelector:
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   hidden: selectCartHidden,

@@ -6,6 +6,9 @@
   padding: 15px 0;
   font-size: 20px;
   align-items: center;
+  @media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
 
   .image-container {
     width: 23%;
@@ -20,14 +23,18 @@
   .quantity,
   .price {
     width: 23%;
+    @media screen and (max-width: 800px) {
+      width: 20%;
+    }
   }
 
   .quantity {
     display: flex;
+    margin: 0 5px;
 
     .arrow {
       cursor: pointer;
-      margin: 0 10px;
+      margin: 0 5px;
     }
     // .value {
     //   margin: 0 10px;
