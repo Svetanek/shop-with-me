@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { getCollections } from '../../redux/shop/shop.actions';
 // import { gettingCollections } from '../../redux/shop/shop.actions';
 import { selectCollectionFetching } from '../../redux/shop/shop.selectors';
-import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
-import CollectionPage from '../collection/collection.component';
+// import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
+// import CollectionPage from '../collection/collection.component';
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
+import Spinner from '../../components/spinner/spinner.component';
+
+const CollectionsOverviewContainer = lazy(() =>
+  import('../../components/collections-overview/collections-overview.container')
+);
+const CollectionPage = lazy(() => import('../collection/collection.component'));
 
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
@@ -17,15 +23,17 @@ const ShopPage = ({ getCollections, match }, ...props) => {
   }, [getCollections]);
   return (
     <div className="shop-page">
-      <Route
-        exact
-        path={`${match.path}`}
-        component={CollectionsOverviewContainer}
-      />
-      <Route
-        path={`${match.path}/:collectionId`}
-        render={props => <CollectionPageWithSpinner {...props} />}
-      />
+      <Suspense fallback={Spinner}>
+        <Route
+          exact
+          path={`${match.path}`}
+          component={CollectionsOverviewContainer}
+        />
+        <Route
+          path={`${match.path}/:collectionId`}
+          render={props => <CollectionPageWithSpinner {...props} />}
+        />
+      </Suspense>
     </div>
   );
 };
