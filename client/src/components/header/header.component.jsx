@@ -1,7 +1,5 @@
 import React from 'react';
 import './header.styles.scss';
-// import { Link } from 'react-router-dom';
-// import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selector';

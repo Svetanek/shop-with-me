@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { signUpStart } from '../../redux/user/user.actions';
-// import { auth, createUserProfileDoc } from '../../firebase/firebase.utils';
 import './sign-up.styles.scss';
-// import { tsMethodSignature } from '@babel/types';
 
 const SignUp = ({ signUpStart }) => {
   const [userData, setUserData] = useState({
@@ -23,21 +21,6 @@ const SignUp = ({ signUpStart }) => {
       return;
     }
     signUpStart({ displayName, email, password });
-    // try {
-    //   const { user } = await auth.createUserWithEmailAndPassword(
-    //     email,
-    //     password
-    //   );
-    //   await createUserProfileDoc(user, { displayName });
-    // this.setState({
-    //   displayName: '',
-    //   email: '',
-    //   password: '',
-    //   confirmPassword: '',
-    // });
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
 
   const handleChange = e => {

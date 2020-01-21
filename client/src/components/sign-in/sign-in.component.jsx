@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import FormInput from '../form-input/form-input.component.jsx';
 import Button from '../button/button.component';
-// import { auth } from '../../firebase/firebase.utils';
 import {
   googleSignInStart,
   emailSignInStart,
