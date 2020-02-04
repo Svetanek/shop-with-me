@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-
+//to enforce HTTPS --- Heroku runs reverse proxy - forwards unencrypted HTTP traffic to the website. So while original header is hidden by H, it appends ProtoHeader property
 if (process.env.NODE_ENV === 'production') {
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.use(express.static(path.join(__dirname, 'client/build')));
