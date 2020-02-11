@@ -25,7 +25,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   }
 }
 
-//nevertheless use helper function need keeping cath(error) since signInWithPopup may also fail
+//nevertheless use helper function need keeping catch(error) since signInWithPopup may also fail
 export function* signInWithGoogle() {
   try {
     const { user } = yield auth.signInWithPopup(googleProvider);

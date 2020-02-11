@@ -14,7 +14,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
@@ -22,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 //to enforce HTTPS --- Heroku runs reverse proxy - forwards unencrypted HTTP traffic to the website. So while original header is hidden by H, it appends ProtoHeader property
 if (process.env.NODE_ENV === 'production') {
+  app.use(compression());
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', function(req, res) {

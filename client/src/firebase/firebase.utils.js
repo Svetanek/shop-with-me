@@ -80,6 +80,26 @@ export const getCurrentUser = () => {
   });
 };
 
+export const getUserCartRef = async userId => {
+  const cartRef = firestore.collection('carts').where('userId', '==', userId);
+  const snapshot = await cartRef.get();
+  if (snapshot.empty) {
+    //as an alternative
+    //  const cartDocRef = firestore.collection('carts').doc(userId);
+    const cartDocRef = firestore.collection('carts').doc();
+    await cartDocRef.set({ userId, cartItems: [] });
+    return cartDocRef;
+  } else {
+    return snapshot.docs[0].ref;
+  }
+};
+
+//need to try later alternative for cart in FB:
+// export const updateCart = (userAuth, cartItems) => {
+//   const userRef = firestore.doc(`users/${userAuth.uid}`);
+//   userRef.update({[`${userAuth.uid}.cart`]: cartItems})
+// };
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 

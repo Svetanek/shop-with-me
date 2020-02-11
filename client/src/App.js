@@ -16,7 +16,7 @@ const SignInSignUpPage = lazy(() =>
   import('./pages/sign-in-up-page/sign-in-up-page.component.jsx')
 );
 
-// put checkUserSession into the dependancy array since it's passed trough mapDispatchToProps
+// put checkUserSession into the dependancy array as it's passed trough mapDispatchToProps
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
     checkUserSession();
