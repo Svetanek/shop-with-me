@@ -11,7 +11,8 @@
     "build": "cd client && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "test-client": "cd client && npm run test"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -20,9 +21,11 @@
     "dotenv": "7.0.0",
     "express": "^4.16.4",
     "express-sslify": "^1.2.0",
+    "save-dev": "0.0.1-security",
     "stripe": "6.28.0"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "nodemon": "^2.0.2"
   }
 }
